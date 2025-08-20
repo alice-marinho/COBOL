@@ -45,6 +45,11 @@
             MOVE MEDIA TO MASCARA.
             DISPLAY "A MEDIA E ".
             DISPLAY MASCARA.
+
+            IF MEDIA >= 6
+                DISPLAY "ALUNO APROVADO! :)"
+            ELSE 
+                DISPLAY "ALUNO REPROVADO! :(".
             STOP RUN.
        END PROGRAM CALCULAR-MEDIA.
 
