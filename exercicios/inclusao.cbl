@@ -17,7 +17,7 @@
            Decimal-Point Is Comma.
        Input-OutPut Section.
        File-Control.
-              Select ARQUIVO-INCLUSAO Assign To Disk
+              Select ARQUIVO-INCLUSAO Assign To "PRODUTO.DAT"
                 Organization Is Indexed
                 Access Mode Is Dynamic
                 Record Key Is CODIGO
@@ -27,10 +27,10 @@
        FILE SECTION.
        FD  ARQUIVO-INCLUSAO
            Label Record Is Standard
-           Record Contains 46 Characters
+           Record Contains 42 Characters
            Block Contains 11 Records
-           Data Record Is REGISTRO-PRODUTO
-           Value Of File-Id "PRODUTO.DAT".
+           Data Record Is REGISTRO-PRODUTO.
+           
 
        01  REGISTRO-PRODUTO.
            05 CODIGO                      Pic 9(05).
@@ -51,8 +51,8 @@
            Stop Run.
 
        ABRIR.
-           Move Zeros To PRODUTO, PRECO.
-           Move Spaces To FIM.
+           Move Zeros To PRECO.
+           Move Spaces To PRODUTO, FIM.
            Open OUTPUT ARQUIVO-INCLUSAO.
 
 
@@ -60,17 +60,18 @@
            PERFORM ENTRAR-PRODUTO.
            PERFORM ENTRAR-PRECO.
 
-           WRITE PRODUTO
+           WRITE REGISTRO-PRODUTO
                INVALID KEY
                    DISPLAY "Erro"
                NOT INVALID KEY
                    DISPLAY "SUCESSO"
+           END-WRITE.
 
            PERFORM LEITURA.
 
        LEITURA.
            DISPLAY "*-----------------------*"
-           Display "Digite o codigo : ".
+           Display "Digite o codigo (00000 para sair): ".
            Accept CODIGO.
            If CODIGO = Zeros
               Move "OK" To FIM.
@@ -85,11 +86,8 @@
        ENTRAR-PRECO.
            DISPLAY "Preco: "
            ACCEPT PRECO
-           If PRECO = Spaces
+           If PRECO = Zeros
               Display "Nao pode ficar em branco !".
-           If PRECO < 0
-              Display "Nao pode ser numero negativo!".
-
 
        FECHAR.
            If PRODUTO > Zeros
